@@ -1,0 +1,19 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+body {
+    background-color: #f2f2f6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.weather-detail__value {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.weather-detail__unit {
+    font-size: .8rem;
+}
