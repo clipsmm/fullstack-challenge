@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'weatherapi' => [
+        'app_id' => env('WEATHER_API_ID'),
+    ],
+
 ];

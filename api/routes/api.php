@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +19,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return response()->json([
         'message' => 'all systems are a go',
-        'users' => \App\Models\User::all(),
     ]);
+});
+
+Route::get('/users', function () {
+    $users = User::query()->orderBy('name')->get();
+
+    return UserResource::collection($users);
+});
+
+Route::get('/users/{user}', function (User $user) {
+    return new UserResource($user);
 });

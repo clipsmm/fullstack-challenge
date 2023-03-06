@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Jobs\FetchUserWeather;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
 
 class User extends Authenticatable
 {
@@ -39,4 +41,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the user's weather from cache or trigger fetch.
+     *
+     * @var array<int, string>
+     */
+    public function getWeather()
+    {
+        return Cache::get("weather_{$this->id}", function () {
+            dispatch(new FetchUserWeather($this, "weather_{$this->id}"));
+        });
+    }
 }
