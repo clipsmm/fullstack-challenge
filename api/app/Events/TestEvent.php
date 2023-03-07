@@ -2,32 +2,23 @@
 
 namespace App\Events;
 
-use App\Http\Resources\WeatherForecastResource;
-use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UserWeatherUpdated implements ShouldQueue, ShouldBroadcast
+class TestEvent implements ShouldBroadcast, ShouldQueue
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    public User $user;
-
-    public array $weather;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(User $user, array $weather)
+    public function __construct()
     {
-        $this->user = $user;
-        $this->weather = $weather;
+        //
     }
 
     /**
@@ -35,10 +26,9 @@ class UserWeatherUpdated implements ShouldQueue, ShouldBroadcast
      */
     public function broadcastWith(): array
     {
-        $forecast = WeatherForecastResource::make($this->weather)->toArray(request());
-        $forecast['userId'] = $this->user->id;
-
-        return $forecast;
+        return [
+            'message' => 'Hello World',
+        ];
     }
 
     /**
