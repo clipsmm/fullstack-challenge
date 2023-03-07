@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Resources\UserResource;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Controllers\WeatherController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,16 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return response()->json([
+        'status' => 'ok',
         'message' => 'all systems are a go',
     ]);
 });
 
-Route::get('/users', function () {
-    $users = User::query()->orderBy('name')->get();
-
-    return UserResource::collection($users);
-});
-
-Route::get('/users/{user}', function (User $user) {
-    return new UserResource($user);
-});
+Route::get('users', [WeatherController::class, 'index']);
+Route::get('users/{user}', [WeatherController::class, 'index']);
