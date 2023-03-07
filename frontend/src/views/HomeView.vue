@@ -4,9 +4,12 @@ import UserListItem from "@/components/UserListItem.vue";
 import UserDetails from "@/components/UserDetails.vue";
 import { Modal } from 'bootstrap'
 import { useUsersStore } from "@/stores/users";
+import useLaravelEcho from '@/commons/echo'
 const store = useUsersStore();
 
 const { users } = storeToRefs(useUsersStore())
+
+const { laravelEcho } = useLaravelEcho();
 
 export default {
     components: { UserListItem, UserDetails },
@@ -17,6 +20,14 @@ export default {
 
     created() {
         store.fetchUsers();
+    },
+
+    mounted() {
+        laravelEcho
+            .channel("weather")
+            .listen(".forecast.update", (forecast) => {
+                store.updateUserWeatherForecast(forecast.userId, forecast)
+            });
     },
 
     methods: {
