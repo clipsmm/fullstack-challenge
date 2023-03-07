@@ -22,4 +22,4 @@ Route::get('/', function () {
 });
 
 Route::get('users', [WeatherController::class, 'index']);
-Route::get('users/{user}', [WeatherController::class, 'index']);
+Route::get('users/{user}', [WeatherController::class, 'show']);
